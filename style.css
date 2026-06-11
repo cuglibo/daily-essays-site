@@ -16,7 +16,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
-  line-height: 1.75;
+  line-height: 1.7;
 }
 
 .site-header {
@@ -37,13 +37,15 @@ body {
 nav { color: var(--muted); font-size: 14px; }
 
 .home {
-  width: min(860px, calc(100% - 32px));
+  width: min(1040px, calc(100% - 32px));
   margin: 0 auto;
   padding: 34px 0 64px;
 }
 
 .unlock,
-.intro {
+.intro,
+.section-head,
+.editor-panel {
   padding: 18px 0 24px;
   border-bottom: 1px solid var(--line);
 }
@@ -55,40 +57,52 @@ nav { color: var(--muted); font-size: 14px; }
   font-weight: 700;
 }
 
-h1 {
+h1, h2 {
   margin: 0;
-  font-size: 34px;
   line-height: 1.2;
   letter-spacing: 0;
 }
 
+h1 { font-size: 34px; }
+h2 { font-size: 24px; }
+
 .unlock p,
-.intro p {
-  max-width: 560px;
-  margin: 12px 0 0;
+.intro p,
+.section-head p,
+.editor-panel p {
+  max-width: 620px;
+  margin: 10px 0 0;
   color: var(--muted);
 }
 
-.unlock-form {
-  display: flex;
+.unlock-form,
+.add-form {
+  display: grid;
   gap: 10px;
-  max-width: 520px;
-  margin-top: 22px;
+  max-width: 720px;
+  margin-top: 18px;
 }
 
-input,
-button {
+.unlock-form { grid-template-columns: 1fr auto; }
+
+input, button, select, textarea {
   min-height: 44px;
   border-radius: 8px;
   font: inherit;
 }
 
-input {
-  flex: 1;
-  min-width: 0;
+input, select, textarea {
+  width: 100%;
   border: 1px solid var(--line);
   padding: 0 12px;
   background: var(--surface);
+  color: var(--ink);
+}
+
+textarea {
+  min-height: 140px;
+  padding: 12px;
+  resize: vertical;
 }
 
 button {
@@ -99,17 +113,73 @@ button {
   cursor: pointer;
 }
 
-.error {
-  color: var(--danger) !important;
+button.secondary {
+  background: var(--surface);
+  color: var(--accent);
 }
 
-.essay-list {
+button.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.error { color: var(--danger) !important; }
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  padding: 18px 0;
+}
+
+.metric {
+  display: grid;
+  gap: 2px;
+  min-height: 76px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.metric strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0 0 14px;
+}
+
+.tab {
+  min-height: 36px;
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tab.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.item-list {
   display: grid;
   gap: 10px;
-  padding-top: 18px;
+  padding-top: 14px;
 }
 
-.essay-row {
+.item-row {
   display: grid;
   grid-template-columns: 108px 1fr;
   gap: 4px 18px;
@@ -123,22 +193,27 @@ button {
   text-align: left;
 }
 
-.essay-row:hover strong { color: var(--accent); }
+.item-row:hover strong { color: var(--accent); }
 
-.essay-row time {
+.item-row time {
   grid-row: span 2;
   color: var(--muted);
   font-size: 14px;
 }
 
-.essay-row strong {
+.item-row strong {
   font-size: 18px;
   line-height: 1.45;
 }
 
-.essay-row span {
+.item-row span {
   color: var(--muted);
   font-size: 14px;
+}
+
+.empty {
+  padding: 22px 0;
+  color: var(--muted);
 }
 
 .article {
@@ -156,6 +231,21 @@ button {
   margin-bottom: 8px;
 }
 
+.meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.meta-line span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .prose {
   margin-top: 24px;
   font-size: 17px;
@@ -165,13 +255,19 @@ button {
 .prose h2, .prose h3, .prose h4 { margin: 1.6em 0 0.6em; line-height: 1.35; }
 .prose ul { padding-left: 1.3em; }
 
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 @media (max-width: 640px) {
   .site-header { padding: 0 14px; }
-  .home { width: min(100% - 24px, 860px); padding-top: 22px; }
+  .home { width: min(100% - 24px, 1040px); padding-top: 22px; }
   h1 { font-size: 28px; }
-  .unlock-form { display: grid; }
-  .essay-row { grid-template-columns: 1fr; gap: 3px; padding: 14px 0; }
-  .essay-row time { grid-row: auto; }
+  .unlock-form { grid-template-columns: 1fr; }
+  .item-row { grid-template-columns: 1fr; gap: 3px; padding: 14px 0; }
+  .item-row time { grid-row: auto; }
   .article { padding: 20px; }
   .prose { font-size: 16px; }
 }
