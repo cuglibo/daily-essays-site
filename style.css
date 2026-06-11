@@ -255,6 +255,21 @@ button.danger {
 .prose h2, .prose h3, .prose h4 { margin: 1.6em 0 0.6em; line-height: 1.35; }
 .prose ul { padding-left: 1.3em; }
 
+.token-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+}
+
+.sync-status {
+  min-height: 24px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sync-status.error { color: var(--danger); }
+
 .form-actions {
   display: flex;
   flex-wrap: wrap;
@@ -266,6 +281,7 @@ button.danger {
   .home { width: min(100% - 24px, 1040px); padding-top: 22px; }
   h1 { font-size: 28px; }
   .unlock-form { grid-template-columns: 1fr; }
+  .token-row { grid-template-columns: 1fr; }
   .item-row { grid-template-columns: 1fr; gap: 3px; padding: 14px 0; }
   .item-row time { grid-row: auto; }
   .article { padding: 20px; }
